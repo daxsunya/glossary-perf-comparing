@@ -1,6 +1,9 @@
 ## REST
 ### Лёгкая нагрузка (sanity check): убедиться, что всё работает.
-Запустить приложение со следуюшими ресурсами:
+Запустить приложение со следующими ресурсами:
+```
+docker build -t app_http .
+```
 ```
 docker run -p 8000:8000 --cpus="0.708" --memory="133M" -d app_http
 ```
@@ -38,8 +41,32 @@ docker run -p 8000:8000 --cpus="0.708" --memory="133M" -d app_http
 
 <img width="2928" height="1800" alt="total_requests_per_second_1768746677 338" src="https://github.com/user-attachments/assets/743ca1a9-2fcf-4bb5-aed4-02cc2aff89b9" />
 
-
 Заметны скачки по времени ответа а также потребления памяти при длительной нагрузке на значениях близких к пиковой нагрузке, но система еще справляется
 
 <img width="1223" height="593" alt="Снимок экрана 2026-01-18 в 17 23 55" src="https://github.com/user-attachments/assets/5c0c54a8-6abd-49c6-a55c-51ff72ed1c25" />
 
+## gRPC
+### Лёгкая нагрузка (sanity check): убедиться, что всё работает.
+Аналогично запустим на небольшом количестве пользователей и убедимся, что все отработало
+
+Для начала соберем и запустим образ
+
+```
+docker build -t app_grpc .
+```
+```
+docker run -p 50051:50051 --cpus="0.708" --memory="133M" -d app_grpc 
+```
+
+Запустим активность пользователей
+
+1. `locust -f tests/performance/grpc/locustfile.py`
+2.  Перейти по адресу: `http://localhost:8089`
+
+Убедимся, что все отработало корректно
+
+<img width="2928" height="1800" alt="total_requests_per_second_1768751269 31" src="https://github.com/user-attachments/assets/e580dcc0-e557-499d-a1d3-6f0b4a673b79" />
+
+<img width="1223" height="593" alt="Снимок экрана 2026-01-18 в 18 57 08" src="https://github.com/user-attachments/assets/74331856-8004-4c54-9f4d-7ceb42248c05" />
+
+### Установка рабочей нагрузки
