@@ -1,6 +1,6 @@
 from concurrent import futures
 import grpc
-from app import terms_pb2, terms_pb2_grpc, crud
+import terms_pb2, terms_pb2_grpc, crud
 from database import SessionLocal, Base, engine
 from schemas import TermCreate
 

@@ -58,7 +58,7 @@ class GrpcUser(User):
         keyword = random.choice(self.keywords)
         self.grpc_request("GetTerm", self.client.get_term, keyword)
 
-    @task(10)
+    @task(3)
     def create_term(self):
         keyword = random_keyword()
         self.grpc_request("CreateTerm", self.client.create_term, keyword, "Created by gRPC locust")
