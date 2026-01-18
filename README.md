@@ -70,3 +70,12 @@ docker run -p 50051:50051 --cpus="0.708" --memory="133M" -d app_grpc
 <img width="1223" height="593" alt="Снимок экрана 2026-01-18 в 18 57 08" src="https://github.com/user-attachments/assets/74331856-8004-4c54-9f4d-7ceb42248c05" />
 
 ### Установка рабочей нагрузки
+Сразу хочется отметить, что выдерживаемый rps выше, чем у REST, а потребляемые ресурсы меньше
+
+<img width="2928" height="1800" alt="total_requests_per_second_1768752775 088" src="https://github.com/user-attachments/assets/34b29146-1143-49b6-884f-ecf5358c1446" />
+
+<img width="1223" height="593" alt="Снимок экрана 2026-01-18 в 19 16 07" src="https://github.com/user-attachments/assets/ea1c3bac-bec1-4663-928b-5eb1730bf824" />
+
+### Стресс-тест (приближение к пику): выявить пределы производительности.
+
+### Тест на стабильность
