@@ -77,5 +77,23 @@ docker run -p 50051:50051 --cpus="0.708" --memory="133M" -d app_grpc
 <img width="1223" height="593" alt="Снимок экрана 2026-01-18 в 19 16 07" src="https://github.com/user-attachments/assets/ea1c3bac-bec1-4663-928b-5eb1730bf824" />
 
 ### Стресс-тест (приближение к пику): выявить пределы производительности.
+При 1200 пользователях по сравнению с REST показатели лучше
+<img width="2928" height="1800" alt="total_requests_per_second_1768754011 356" src="https://github.com/user-attachments/assets/d29b2c38-fdde-452d-b8d0-904280148bdd" />
+
+<img width="2928" height="1800" alt="total_requests_per_second_1768754011 356" src="https://github.com/user-attachments/assets/a703881b-087d-48f0-b558-30689a3960ba" />
+
+Во время тестирования rps держался примерно в одном диапазоне (возможно уперлись в лимиты передачи по сети)
+
+Был замечен интересный момент при повышении количества пользователей резкий скачок по memory usage, который впоследствии стабилизировался
+<img width="1223" height="593" alt="Снимок экрана 2026-01-18 в 20 37 52" src="https://github.com/user-attachments/assets/e761c499-e142-4ab8-8d67-938708c51523" />
+
+График из locust выглядит следующим образом
+<img width="2928" height="1800" alt="total_requests_per_second_1768759351 488" src="https://github.com/user-attachments/assets/ccd888ae-39d1-48f2-8d20-3191a505de25" />
+
 
 ### Тест на стабильность
+Выбрано значение в 3000 пользователей, иногда проседает rps, значение memory usage держится в одном диапазоне, помещаясь в выделенные ресурсы
+
+<img width="2928" height="1800" alt="total_requests_per_second_1768754011 356" src="https://github.com/user-attachments/assets/400e1d3b-48ad-4baf-a939-db080f6aa88c" />
+
+<img width="1223" height="593" alt="Снимок экрана 2026-01-18 в 20 07 08" src="https://github.com/user-attachments/assets/3f386436-e58c-47e5-814f-1c0524d1e9b1" />
