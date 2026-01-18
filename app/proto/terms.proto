@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package app;
+
+service TermsService {
+  rpc CreateTerm (CreateTermRequest) returns (TermResponse);
+  rpc GetTerm (GetTermRequest) returns (TermResponse);
+}
+
+message CreateTermRequest {
+  string keyword = 1;
+  string description = 2;
+}
+
+message GetTermRequest {
+  string keyword = 1;
+}
+
+message TermResponse {
+  int32 id = 1;
+  string keyword = 2;
+  string description = 3;
+}

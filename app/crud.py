@@ -1,36 +1,45 @@
-from sqlalchemy.orm import Session
 import models
-import schemas
+from sqlalchemy.orm import Session
+from models import Term
+from schemas import TermCreate, TermUpdate
+from sqlalchemy import literal
 
 
 def get_terms(db: Session):
     return db.query(models.Term).all()
 
-
 def get_term_by_keyword(db: Session, keyword: str):
-    return db.query(models.Term).filter(models.Term.keyword == keyword).first()
+    return db.query(Term).filter(Term.keyword == literal(keyword)).first()
 
 
-def create_term(db: Session, term: schemas.TermCreate):
-    db_term = models.Term(**term.dict())
-    db.add(db_term)
-    db.commit()
-    db.refresh(db_term)
-    return db_term
+def create_term(db: Session, term: TermCreate):
+    try:
+        db_term = Term(**term.dict())
+        db.add(db_term)
+        db.commit()
+        db.refresh(db_term)
+        return db_term
+    except Exception:
+        db.rollback()
+        raise
 
 
-def update_term(db: Session, db_term: models.Term, updates: schemas.TermUpdate):
-    if updates.keyword is not None:
-        db_term.keyword = updates.keyword
-    if updates.description is not None:
-        db_term.description = updates.description
+def update_term(db: Session, db_term: Term, updates: TermUpdate):
+    try:
+        for key, value in updates.dict(exclude_unset=True).items():
+            setattr(db_term, key, value)
+        db.commit()
+        db.refresh(db_term)
+        return db_term
+    except Exception:
+        db.rollback()
+        raise
 
-    db.commit()
-    db.refresh(db_term)
-    return db_term
 
-
-def delete_term(db: Session, db_term: models.Term):
-    db.delete(db_term)
-    db.commit()
-    return True
+def delete_term(db: Session, db_term: Term):
+    try:
+        db.delete(db_term)
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
